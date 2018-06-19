@@ -5,6 +5,8 @@
  */
 package orga;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author David
@@ -55,6 +57,7 @@ public class MainOrga extends javax.swing.JFrame {
         bt_leer = new javax.swing.JButton();
         bt_escribir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        bt_leer1 = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
         jLabel2.setText("Lectura");
@@ -293,6 +296,18 @@ public class MainOrga extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
         jLabel1.setText("Tarea 1 | Organización de Computadoras");
 
+        bt_leer1.setText("Ordenar numeros");
+        bt_leer1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_leer1MouseClicked(evt);
+            }
+        });
+        bt_leer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_leer1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -300,10 +315,11 @@ public class MainOrga extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
+                        .addGap(148, 148, 148)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(bt_leer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bt_escribir, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)))
+                            .addComponent(bt_escribir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bt_leer1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(jLabel1)))
@@ -318,7 +334,9 @@ public class MainOrga extends javax.swing.JFrame {
                 .addComponent(bt_leer, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(bt_escribir, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addComponent(bt_leer1)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -367,6 +385,24 @@ public class MainOrga extends javax.swing.JFrame {
         this.jd_TablaLeer.setVisible(true);
     }//GEN-LAST:event_bt_tablaLecturaMouseClicked
 
+    private void bt_leer1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_leer1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_leer1MouseClicked
+
+    private void bt_leer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_leer1ActionPerformed
+        // TODO add your handling code here:
+        Memorias m = new Memorias();
+        ArrayList<Integer> datos = m.leerDatos();
+                System.out.println(datos);
+        m.ordenar();
+        
+        System.out.println("--------------------------------------------------");
+        for (int i = 0; i < m.getRAM().length; i++) {
+            int j= (m.getRAM())[i];
+            System.out.println(j);
+        }
+    }//GEN-LAST:event_bt_leer1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -413,6 +449,7 @@ public class MainOrga extends javax.swing.JFrame {
     private javax.swing.JButton bt_SinCacheLectura;
     private javax.swing.JButton bt_escribir;
     private javax.swing.JButton bt_leer;
+    private javax.swing.JButton bt_leer1;
     private javax.swing.JButton bt_tablaEscritura;
     private javax.swing.JButton bt_tablaLectura;
     private javax.swing.JLabel jLabel1;

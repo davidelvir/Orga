@@ -339,10 +339,11 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="bt_leer" max="32767" attributes="0"/>
-                              <Component id="bt_escribir" pref="101" max="32767" attributes="0"/>
+                              <Component id="bt_escribir" max="32767" attributes="0"/>
+                              <Component id="bt_leer1" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -363,7 +364,9 @@
                   <Component id="bt_leer" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                   <Component id="bt_escribir" min="-2" pref="51" max="-2" attributes="0"/>
-                  <EmptySpace pref="92" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="bt_leer1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -392,6 +395,15 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Tarea 1 | Organizaci&#xf3;n de Computadoras"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_leer1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ordenar numeros"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_leer1MouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_leer1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
