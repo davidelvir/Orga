@@ -18,6 +18,12 @@ public class Memorias {
 
     public int[] RAM = new int[4096];
     public int[] CACHE = new int[1024];
+    
+    final int conjuntosCache = 16;
+    final int tamBloque = 8;
+    final int tamConjunto = 4;
+    public int[][][] CACHE_CONJUNTO = new int[16][4][3];
+    public int[][] siguienteConjunto = new int[16][1];
 
     public int k = 8; // tamaño del bloque
     public int m = 1024; //numero de lineas
@@ -118,7 +124,34 @@ public class Memorias {
         } else if (tipo == 3) {
 
         } else if (tipo == 4) {
+            final int bloque = pos / tamBloque;
+            final int conjunto = bloque % conjuntosCache;
+            final int etiqueta = bloque / conjuntosCache;
 
+            if (siguienteConjunto[conjunto][0] > tamConjunto - 1) {
+                siguienteConjunto[conjunto][0] = 0;
+            }
+
+            int linea;
+            if ((linea = estaEnConjunto(conjunto, etiqueta)) != -1) {
+                //tiempo += 0.01;
+                CACHE_CONJUNTO[conjunto][linea][1] = 1;
+            }
+
+            linea = siguienteConjunto[conjunto][0];
+
+            if (CACHE_CONJUNTO[conjunto][linea][0] == -1) {
+                CACHE_CONJUNTO[conjunto][linea][0] = 1;
+                CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
+                //tiempo += 0.11;
+            } else {
+                if (CACHE_CONJUNTO[conjunto][linea][1] == 1) {
+                    //tiempo += 0.22;
+                } else {
+                    //tiempo += 0.11;
+                }
+            }
+            siguienteConjunto[conjunto][0]++;
         }
     }
 
@@ -131,11 +164,49 @@ public class Memorias {
         } else if (tipo == 3) {
 
         } else if (tipo == 4) {
+            final int bloque = pos / tamBloque;
+            final int conjunto = bloque % conjuntosCache;
+            final int etiqueta = bloque / conjuntosCache;
 
+            if (siguienteConjunto[conjunto][0] > tamConjunto - 1) {
+                siguienteConjunto[conjunto][0] = 0;
+            }
+
+            if (estaEnConjunto(conjunto, etiqueta) != -1) {
+                //tiempo += 0.01;
+            }
+
+            int linea = siguienteConjunto[conjunto][0];
+
+            if (CACHE_CONJUNTO[conjunto][linea][0] == -1) {
+                CACHE_CONJUNTO[conjunto][linea][0] = 1;
+                CACHE_CONJUNTO[conjunto][linea][1] = -1;
+                CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
+                siguienteConjunto[conjunto][0]++;
+                //tiempo += 0.11;
+            } else {
+                if (CACHE_CONJUNTO[conjunto][linea][1] == 1) {
+                    CACHE_CONJUNTO[conjunto][linea][1] = -1;
+                    //tiempo += 0.22;
+                } else {
+                    //tiempo += 0.11;
+                }
+                CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
+                siguienteConjunto[conjunto][0]++;
+            }
         }
         return dato;
     }
 
+    private int estaEnConjunto(int conjunto, int etiqueta) {
+        for (int i = 0; i < tamConjunto; i++) {
+            if (CACHE_CONJUNTO[conjunto][i][2] == etiqueta) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     public void ordenar() {
         int n = 4096;
         int cambios = 1;
