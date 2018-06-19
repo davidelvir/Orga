@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JDialog" name="jd_OpcionesLeer">
+    <Container class="javax.swing.JDialog" name="jd_Opciones">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -22,11 +22,6 @@
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
-                  <Component id="bt_tablaLectura" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -42,9 +37,7 @@
                   <Component id="bt_CacheAsociativoLectura" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="bt_AsociativoConjuntoLectura" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                  <Component id="bt_tablaLectura" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="50" max="32767" attributes="0"/>
+                  <EmptySpace pref="59" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -55,40 +48,44 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Copperplate Gothic Light" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Lectura"/>
+            <Property name="text" type="java.lang.String" value="Opciones"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="bt_SinCacheLectura">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sin Cache"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_SinCacheLecturaMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bt_CacheDirectoLectura">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cache Directo"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_CacheDirectoLecturaMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bt_CacheAsociativoLectura">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cache Asociativo"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_CacheAsociativoLecturaMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bt_AsociativoConjuntoLectura">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cache Asociativo por Conjunto"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="bt_tablaLectura">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Ver Tabla"/>
-          </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_tablaLecturaMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_AsociativoConjuntoLecturaMouseClicked"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JDialog" name="jd_TablaLeer">
+    <Container class="javax.swing.JDialog" name="jd_Tabla">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -96,12 +93,12 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="478" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="226" max="-2" attributes="0"/>
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="70" max="32767" attributes="0"/>
@@ -111,9 +108,9 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="90" max="-2" attributes="0"/>
                   <EmptySpace pref="284" max="32767" attributes="0"/>
               </Group>
@@ -145,155 +142,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Copperplate Gothic Light" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Resultados Lectura"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JDialog" name="jd_OpcionesEscribir">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="0" pref="51" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="bt_SinCacheEscritura" alignment="0" max="32767" attributes="0"/>
-                      <Component id="bt_CacheDirectoEscritura" alignment="0" max="32767" attributes="0"/>
-                      <Component id="bt_CacheAsociativoEscritura" alignment="0" max="32767" attributes="0"/>
-                      <Component id="bt_AsociativoConjuntoEscritura" alignment="0" pref="212" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="62" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
-                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
-                  <Component id="bt_tablaEscritura" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="bt_SinCacheEscritura" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="bt_CacheDirectoEscritura" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                  <Component id="bt_CacheAsociativoEscritura" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                  <Component id="bt_AsociativoConjuntoEscritura" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="bt_tablaEscritura" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="45" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel3">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Copperplate Gothic Light" size="18" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Escritura"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="bt_SinCacheEscritura">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Sin Cache"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="bt_CacheDirectoEscritura">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cache Directo"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="bt_CacheAsociativoEscritura">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cache Asociativo"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="bt_AsociativoConjuntoEscritura">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cache Asociativo por Conjunto"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="bt_tablaEscritura">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Ver Tabla"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_tablaEscrituraMouseClicked"/>
-          </Events>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JDialog" name="jd_TablaEscribir">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="195" max="-2" attributes="0"/>
-                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="478" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace pref="70" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" min="-2" pref="90" max="-2" attributes="0"/>
-                  <EmptySpace pref="284" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-          <AuxValues>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JTable" name="tb_escritura">
-              <Properties>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="2" rowCount="1">
-                    <Column editable="false" title="Tipo" type="java.lang.String"/>
-                    <Column editable="true" title="Tiempo de Corrida" type="java.lang.Object"/>
-                  </Table>
-                </Property>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Component class="javax.swing.JLabel" name="jLabel5">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Copperplate Gothic Light" size="18" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Resultados Escritura"/>
+            <Property name="text" type="java.lang.String" value="Resultados"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -339,18 +188,15 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="bt_leer" max="32767" attributes="0"/>
-                              <Component id="bt_escribir" pref="101" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                          <Component id="bt_leer1" min="-2" pref="148" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="61" max="32767" attributes="0"/>
+                  <EmptySpace pref="51" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -359,32 +205,14 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                  <Component id="bt_leer" min="-2" pref="49" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                  <Component id="bt_escribir" min="-2" pref="51" max="-2" attributes="0"/>
-                  <EmptySpace pref="92" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                  <Component id="bt_leer1" min="-2" pref="66" max="-2" attributes="0"/>
+                  <EmptySpace pref="88" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="bt_leer">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Leer"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_leerMouseClicked"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="bt_escribir">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Escribir"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_escribirMouseClicked"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -392,6 +220,15 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Tarea 1 | Organizaci&#xf3;n de Computadoras"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="bt_leer1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Ordenar numeros"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="bt_leer1MouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_leer1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
