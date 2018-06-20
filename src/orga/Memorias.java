@@ -18,7 +18,7 @@ public class Memorias {
 
     public int[] RAM = new int[4096];
     public int[] CACHE = new int[1024];
-    
+
     final int conjuntosCache = 16;
     final int tamBloque = 8;
     final int tamConjunto = 4;
@@ -30,6 +30,8 @@ public class Memorias {
 
     public int k = 8; // tamaño del bloque
     public int m = 1024; //numero de lineas
+
+    public int tiempo = 0;
 
     public void CD(int op) {
 
@@ -122,6 +124,7 @@ public class Memorias {
 
         if (tipo == 1) {
             RAM[pos] = dato;
+            tiempo += 0.1;
         } else if (tipo == 2) {
 
         } else if (tipo == 3) {
@@ -151,6 +154,7 @@ public class Memorias {
                 CACHE_A[linea][2] = etiqueta;
             }
             siguiente++;
+
         } else if (tipo == 4) {
             final int bloque = pos / tamBloque;
             final int conjunto = bloque % conjuntosCache;
@@ -187,6 +191,7 @@ public class Memorias {
         int dato = 0;
         if (tipo == 1) {
             dato = RAM[pos];
+            tiempo += 0.1;
         } else if (tipo == 2) {
 
         } else if (tipo == 3) {
@@ -218,6 +223,7 @@ public class Memorias {
                 CACHE_A[linea][2] = etiqueta;
                 siguiente++;
             }
+
         } else if (tipo == 4) {
             final int bloque = pos / tamBloque;
             final int conjunto = bloque % conjuntosCache;
@@ -261,7 +267,7 @@ public class Memorias {
         }
         return -1;
     }
-    
+
     private int estaEnCacheA(int bloque) {
         for (int i = 0; i < lineaCache; i++) {
             if (CACHE_A[i][2] == bloque) {
@@ -270,36 +276,41 @@ public class Memorias {
         }
         return -1;
     }
-    
-    public void ordenar() {
+
+    public int ordenar(int tipo) {
         int n = 4096;
         int cambios = 1;
         int limite = n - 1;
+        //this.tiempo = 0;
 
         int a = 0;
         int b = 0;
 
         while (cambios > 0) {
             cambios = 0;
-            b = leer(0, 1);
+            b = leer(0, tipo);
             for (int i = 0; i <= limite; i++) {
-                a = leer(i, 1);
+                a = leer(i, tipo);
                 if (a < b) {
-                    escribir(i, 1, b);
-                    escribir(i - 1, 1, a);
+                    escribir(i, tipo, b);
+                    escribir(i - 1, tipo, a);
                     a = b;
                     cambios++;
                 }
                 b = a;
             }
             limite--;
-        
-    }
+
+        }
+        return this.tiempo;
     }
 
     public int[] getRAM() {
         return RAM;
     }
-    
+
+    public int getTiempo() {
+        return tiempo;
+    }
 
 }
