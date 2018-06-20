@@ -54,6 +54,11 @@ public class MainOrga extends javax.swing.JFrame {
                 bt_SinCacheLecturaMouseClicked(evt);
             }
         });
+        bt_SinCacheLectura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_SinCacheLecturaActionPerformed(evt);
+            }
+        });
 
         bt_CacheDirectoLectura.setText("Cache Directo");
         bt_CacheDirectoLectura.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -61,11 +66,21 @@ public class MainOrga extends javax.swing.JFrame {
                 bt_CacheDirectoLecturaMouseClicked(evt);
             }
         });
+        bt_CacheDirectoLectura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_CacheDirectoLecturaActionPerformed(evt);
+            }
+        });
 
         bt_CacheAsociativoLectura.setText("Cache Asociativo");
         bt_CacheAsociativoLectura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bt_CacheAsociativoLecturaMouseClicked(evt);
+            }
+        });
+        bt_CacheAsociativoLectura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_CacheAsociativoLecturaActionPerformed(evt);
             }
         });
 
@@ -188,7 +203,7 @@ public class MainOrga extends javax.swing.JFrame {
                         .addGap(38, 38, 38)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
+                        .addGap(137, 137, 137)
                         .addComponent(bt_leer1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
@@ -197,9 +212,9 @@ public class MainOrga extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addGap(63, 63, 63)
+                .addGap(62, 62, 62)
                 .addComponent(bt_leer1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -226,64 +241,87 @@ public class MainOrga extends javax.swing.JFrame {
 
     private void bt_leer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_leer1ActionPerformed
         // TODO add your handling code here:
-        Memorias m = new Memorias();
-        ArrayList<Integer> datos = m.leerDatos();
-                System.out.println(datos);
-        m.ordenar();
-        
-        System.out.println("--------------------------------------------------");
-        for (int i = 0; i < m.getRAM().length; i++) {
-            int j= (m.getRAM())[i];
-            System.out.println(j);
-        }
     }//GEN-LAST:event_bt_leer1ActionPerformed
 
     private void bt_SinCacheLecturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_SinCacheLecturaMouseClicked
         // TODO add your handling code here:
-        
+
         //Llamar Metodos Lectura y Escritura
-        
         this.jd_Tabla.setModal(true);
         this.jd_Tabla.pack();
         this.jd_Tabla.setLocationRelativeTo(this);
         this.jd_Tabla.setVisible(true);
-        
+
     }//GEN-LAST:event_bt_SinCacheLecturaMouseClicked
 
     private void bt_CacheDirectoLecturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_CacheDirectoLecturaMouseClicked
         // TODO add your handling code here:
-        
+
         //Llamar Metodos Lectura y Escritura
-        
         this.jd_Tabla.setModal(true);
         this.jd_Tabla.pack();
         this.jd_Tabla.setLocationRelativeTo(this);
         this.jd_Tabla.setVisible(true);
-        
+
     }//GEN-LAST:event_bt_CacheDirectoLecturaMouseClicked
 
     private void bt_CacheAsociativoLecturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_CacheAsociativoLecturaMouseClicked
         // TODO add your handling code here:
-        
+
         //Llamar Metodos Lectura y Escritura
-        
         this.jd_Tabla.setModal(true);
         this.jd_Tabla.pack();
         this.jd_Tabla.setLocationRelativeTo(this);
         this.jd_Tabla.setVisible(true);
-        
+
     }//GEN-LAST:event_bt_CacheAsociativoLecturaMouseClicked
 
     private void bt_AsociativoConjuntoLecturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_AsociativoConjuntoLecturaMouseClicked
         // TODO add your handling code here:
-        
+
         //Llamar Metodos Lectura y Escritura
         this.jd_Tabla.setModal(true);
         this.jd_Tabla.pack();
         this.jd_Tabla.setLocationRelativeTo(this);
         this.jd_Tabla.setVisible(true);
-        
+
     }//GEN-LAST:event_bt_AsociativoConjuntoLecturaMouseClicked
+
+    private void bt_CacheDirectoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_CacheDirectoLecturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bt_CacheDirectoLecturaActionPerformed
+
+    private void bt_SinCacheLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_SinCacheLecturaActionPerformed
+        // TODO add your handling code here:
+        Memorias m = new Memorias();
+        ArrayList<Integer> datos = m.leerDatos();
+        System.out.println(datos);
+        int time = m.ordenar(1);
+
+        System.out.println("--------------------------------------------------");
+        for (int i = 0; i < m.getRAM().length; i++) {
+            int j = (m.getRAM())[i];
+            System.out.println(j);
+        }
+        System.out.println("TIEMPO: " + time + "µs");
+    }//GEN-LAST:event_bt_SinCacheLecturaActionPerformed
+
+    private void bt_CacheAsociativoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_CacheAsociativoLecturaActionPerformed
+        // TODO add your handling code here:
+        Memorias m = new Memorias();
+        ArrayList<Integer> datos = m.leerDatos();
+        m.ordenar(3);
+
+        System.out.println(datos);
+
+        for (int i = 0; i < m.getRAM().length; i++) {
+            int j = (m.getRAM())[i];
+            System.out.println(j);
+        }
+
+        System.out.println(m.getTiempo());
+
+    }//GEN-LAST:event_bt_CacheAsociativoLecturaActionPerformed
 
     /**
      * @param args the command line arguments
