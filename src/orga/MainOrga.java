@@ -90,6 +90,11 @@ public class MainOrga extends javax.swing.JFrame {
                 bt_AsociativoConjuntoLecturaMouseClicked(evt);
             }
         });
+        bt_AsociativoConjuntoLectura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_AsociativoConjuntoLecturaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_OpcionesLayout = new javax.swing.GroupLayout(jd_Opciones.getContentPane());
         jd_Opciones.getContentPane().setLayout(jd_OpcionesLayout);
@@ -119,9 +124,9 @@ public class MainOrga extends javax.swing.JFrame {
                 .addComponent(bt_CacheDirectoLectura)
                 .addGap(33, 33, 33)
                 .addComponent(bt_CacheAsociativoLectura)
-                .addGap(40, 40, 40)
+                .addGap(29, 29, 29)
                 .addComponent(bt_AsociativoConjuntoLectura)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         tb_Lectura.setModel(new javax.swing.table.DefaultTableModel(
@@ -296,21 +301,25 @@ public class MainOrga extends javax.swing.JFrame {
         Memorias m = new Memorias();
         ArrayList<Integer> datos = m.leerDatos();
         System.out.println(datos);
-        int time = m.ordenar(1);
+        double time = m.ordenar(0);
+        double time2 = m.pruebaEscritorio(0);
 
         System.out.println("--------------------------------------------------");
         for (int i = 0; i < m.getRAM().length; i++) {
             int j = (m.getRAM())[i];
             System.out.println(j);
         }
+        System.out.println("SIN CACHE");
         System.out.println("TIEMPO: " + time + "µs");
+        System.out.println("TIEMPO2: " + time2 + "µs");
     }//GEN-LAST:event_bt_SinCacheLecturaActionPerformed
 
     private void bt_CacheAsociativoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_CacheAsociativoLecturaActionPerformed
         // TODO add your handling code here:
         Memorias m = new Memorias();
         ArrayList<Integer> datos = m.leerDatos();
-        m.ordenar(3);
+        double time = m.ordenar(2);
+        double time2 = m.pruebaEscritorio(2);
 
         System.out.println(datos);
 
@@ -319,9 +328,32 @@ public class MainOrga extends javax.swing.JFrame {
             System.out.println(j);
         }
 
-        System.out.println(m.getTiempo());
+        System.out.println("ASOCIATIVA");
+        System.out.println("TIEMPO: " + time + "µs");
+        System.out.println("TIEMPO2: " + time2 + "µs");
+
 
     }//GEN-LAST:event_bt_CacheAsociativoLecturaActionPerformed
+
+    private void bt_AsociativoConjuntoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_AsociativoConjuntoLecturaActionPerformed
+        // TODO add your handling code here:
+        Memorias m = new Memorias();
+        ArrayList<Integer> datos = m.leerDatos();
+        double time = m.ordenar(3);
+        double time2 = m.pruebaEscritorio(2);
+
+        System.out.println(datos);
+
+        for (int i = 0; i < m.getRAM().length; i++) {
+            int j = (m.getRAM())[i];
+            System.out.println(j);
+        }
+
+        System.out.println("ASOCIATIVA POR CONJUNTOS");
+        System.out.println("TIEMPO: " + time + "µs");
+        System.out.println("TIEMPO2: " + time2 + "µs");
+
+    }//GEN-LAST:event_bt_AsociativoConjuntoLecturaActionPerformed
 
     /**
      * @param args the command line arguments
