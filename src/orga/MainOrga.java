@@ -5,6 +5,7 @@
  */
 package orga;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -62,11 +63,6 @@ public class MainOrga extends javax.swing.JFrame {
                 bt_CacheDirectoLecturaMouseClicked(evt);
             }
         });
-        bt_CacheDirectoLectura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_CacheDirectoLecturaActionPerformed(evt);
-            }
-        });
 
         bt_CacheAsociativoLectura.setText("Cache Asociativo");
         bt_CacheAsociativoLectura.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -74,21 +70,11 @@ public class MainOrga extends javax.swing.JFrame {
                 bt_CacheAsociativoLecturaMouseClicked(evt);
             }
         });
-        bt_CacheAsociativoLectura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_CacheAsociativoLecturaActionPerformed(evt);
-            }
-        });
 
         bt_AsociativoConjuntoLectura.setText("Cache Asociativo por Conjunto");
         bt_AsociativoConjuntoLectura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bt_AsociativoConjuntoLecturaMouseClicked(evt);
-            }
-        });
-        bt_AsociativoConjuntoLectura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_AsociativoConjuntoLecturaActionPerformed(evt);
             }
         });
 
@@ -161,20 +147,20 @@ public class MainOrga extends javax.swing.JFrame {
                 .addGroup(jd_TablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jd_TablaLayout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jd_TablaLayout.createSequentialGroup()
-                        .addGap(226, 226, 226)
+                        .addGap(300, 300, 300)
                         .addComponent(jLabel4)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         jd_TablaLayout.setVerticalGroup(
             jd_TablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_TablaLayout.createSequentialGroup()
-                .addGap(61, 61, 61)
+                .addGap(60, 60, 60)
                 .addComponent(jLabel4)
-                .addGap(47, 47, 47)
+                .addGap(48, 48, 48)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(284, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -261,9 +247,11 @@ public class MainOrga extends javax.swing.JFrame {
         System.out.println("TIEMPO: " + time + "µs");
         System.out.println("TIEMPO2: " + time2 + "µs");
         
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        
         DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel(); 
         modeloT.setRowCount(0);
-        Object[] arr = {"Sin Cache",time,time2};
+        Object[] arr = {"Sin Cache",numberFormat.format(time),numberFormat.format(time2)};
         modeloT.addRow(arr);
         this.tb_Lectura.setModel(modeloT);
 
@@ -288,32 +276,6 @@ public class MainOrga extends javax.swing.JFrame {
 
     private void bt_CacheAsociativoLecturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_CacheAsociativoLecturaMouseClicked
         // TODO add your handling code here:
-
-        //Llamar Metodos Lectura y Escritura
-        this.jd_Tabla.setModal(true);
-        this.jd_Tabla.pack();
-        this.jd_Tabla.setLocationRelativeTo(this);
-        this.jd_Tabla.setVisible(true);
-
-    }//GEN-LAST:event_bt_CacheAsociativoLecturaMouseClicked
-
-    private void bt_AsociativoConjuntoLecturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_AsociativoConjuntoLecturaMouseClicked
-        // TODO add your handling code here:
-
-        //Llamar Metodos Lectura y Escritura
-        this.jd_Tabla.setModal(true);
-        this.jd_Tabla.pack();
-        this.jd_Tabla.setLocationRelativeTo(this);
-        this.jd_Tabla.setVisible(true);
-
-    }//GEN-LAST:event_bt_AsociativoConjuntoLecturaMouseClicked
-
-    private void bt_CacheDirectoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_CacheDirectoLecturaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bt_CacheDirectoLecturaActionPerformed
-
-    private void bt_CacheAsociativoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_CacheAsociativoLecturaActionPerformed
-        // TODO add your handling code here:
         Memorias m = new Memorias();
         ArrayList<Integer> datos = m.leerDatos();
         double time = m.ordenar(2);
@@ -325,17 +287,33 @@ public class MainOrga extends javax.swing.JFrame {
             int j = (m.getRAM())[i];
             System.out.println(j);
         }
+        
+        
 
         System.out.println("ASOCIATIVA");
         System.out.println("TIEMPO: " + time + "µs");
         System.out.println("TIEMPO2: " + time2 + "µs");
+        
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        
+        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel(); 
+        modeloT.setRowCount(0);
+        Object[] arr = {"Cache Asociativa",numberFormat.format(time),numberFormat.format(time2)};
+        modeloT.addRow(arr);
+        this.tb_Lectura.setModel(modeloT);
 
+        //Llamar Metodos Lectura y Escritura
+        this.jd_Tabla.setModal(true);
+        this.jd_Tabla.pack();
+        this.jd_Tabla.setLocationRelativeTo(this);
+        this.jd_Tabla.setVisible(true);
 
-    }//GEN-LAST:event_bt_CacheAsociativoLecturaActionPerformed
+    }//GEN-LAST:event_bt_CacheAsociativoLecturaMouseClicked
 
-    private void bt_AsociativoConjuntoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_AsociativoConjuntoLecturaActionPerformed
+    private void bt_AsociativoConjuntoLecturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_AsociativoConjuntoLecturaMouseClicked
         // TODO add your handling code here:
-        Memorias m = new Memorias();
+        
+         Memorias m = new Memorias();
         ArrayList<Integer> datos = m.leerDatos();
         double time = m.ordenar(3);
         double time2 = m.pruebaEscritorio(2);
@@ -350,8 +328,22 @@ public class MainOrga extends javax.swing.JFrame {
         System.out.println("ASOCIATIVA POR CONJUNTOS");
         System.out.println("TIEMPO: " + time + "µs");
         System.out.println("TIEMPO2: " + time2 + "µs");
+        
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        
+        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel(); 
+        modeloT.setRowCount(0);
+        Object[] arr = {"Cache Asociativa por Conjuntos",numberFormat.format(time),numberFormat.format(time2)};
+        modeloT.addRow(arr);
+        this.tb_Lectura.setModel(modeloT);
 
-    }//GEN-LAST:event_bt_AsociativoConjuntoLecturaActionPerformed
+        //Llamar Metodos Lectura y Escritura
+        this.jd_Tabla.setModal(true);
+        this.jd_Tabla.pack();
+        this.jd_Tabla.setLocationRelativeTo(this);
+        this.jd_Tabla.setVisible(true);
+
+    }//GEN-LAST:event_bt_AsociativoConjuntoLecturaMouseClicked
 
     /**
      * @param args the command line arguments
