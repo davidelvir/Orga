@@ -180,7 +180,8 @@ public class Memorias {
                 if (CACHE_CONJUNTO[conjunto][linea][1] == 1) {
                     tiempo += 0.22;
                 } else {
-                    tiempo += 0.11;
+                    tiempo += 0.01;
+                    //tiempo += 0.11;
                 }
             }
             siguienteConjunto[conjunto][0]++;
@@ -195,6 +196,7 @@ public class Memorias {
         } else if (tipo == 1) {
 
         } else if (tipo == 2) {
+            
             if (siguiente > lineaCache - 1) {
                 siguiente = 0;
             }
@@ -216,14 +218,13 @@ public class Memorias {
             } else {
                 if (CACHE_A[linea][1] == 1) {
                     CACHE_A[linea][1] = -1;
-                    tiempo += 0.22;
+                    //tiempo += 0.22;
                 } else {
-                    tiempo += 0.11;
+                    //tiempo += 0.11;
                 }
                 CACHE_A[linea][2] = etiqueta;
                 siguiente++;
             }
-
         } else if (tipo == 3) {
             final int bloque = pos / tamBloque;
             final int conjunto = bloque % conjuntosCache;
@@ -250,7 +251,8 @@ public class Memorias {
                     CACHE_CONJUNTO[conjunto][linea][1] = -1;
                     tiempo += 0.22;
                 } else {
-                    tiempo += 0.11;
+                    tiempo += 0.01;
+                    //tiempo += 0.11;
                 }
                 CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
                 siguienteConjunto[conjunto][0]++;
