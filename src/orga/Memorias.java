@@ -31,7 +31,7 @@ public class Memorias {
     public int k = 8; // tamaño del bloque
     public int m = 1024; //numero de lineas
 
-    public int tiempo = 0;
+    public double tiempo = 0;
 
     public void CD(int op) {
 
@@ -122,12 +122,12 @@ public class Memorias {
     public void escribir(int pos, int tipo, int dato) {
         int x = 0;
 
-        if (tipo == 1) {
+        if (tipo == 0) {
             RAM[pos] = dato;
             tiempo += 0.1;
-        } else if (tipo == 2) {
+        } else if (tipo == 1) {
 
-        } else if (tipo == 3) {
+        } else if (tipo == 2) {
             if (siguiente > lineaCache - 1) {
                 siguiente = 0;
             }
@@ -155,7 +155,7 @@ public class Memorias {
             }
             siguiente++;
 
-        } else if (tipo == 4) {
+        } else if (tipo == 3) {
             final int bloque = pos / tamBloque;
             final int conjunto = bloque % conjuntosCache;
             final int etiqueta = bloque / conjuntosCache;
@@ -166,7 +166,7 @@ public class Memorias {
 
             int linea;
             if ((linea = estaEnConjunto(conjunto, etiqueta)) != -1) {
-                //tiempo += 0.01;
+                tiempo += 0.01;
                 CACHE_CONJUNTO[conjunto][linea][1] = 1;
             }
 
@@ -175,12 +175,12 @@ public class Memorias {
             if (CACHE_CONJUNTO[conjunto][linea][0] == -1) {
                 CACHE_CONJUNTO[conjunto][linea][0] = 1;
                 CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
-                //tiempo += 0.11;
+                tiempo += 0.11;
             } else {
                 if (CACHE_CONJUNTO[conjunto][linea][1] == 1) {
-                    //tiempo += 0.22;
+                    tiempo += 0.22;
                 } else {
-                    //tiempo += 0.11;
+                    tiempo += 0.11;
                 }
             }
             siguienteConjunto[conjunto][0]++;
@@ -189,12 +189,12 @@ public class Memorias {
 
     public int leer(int pos, int tipo) {
         int dato = 0;
-        if (tipo == 1) {
+        if (tipo == 0) {
             dato = RAM[pos];
             tiempo += 0.1;
-        } else if (tipo == 2) {
+        } else if (tipo == 1) {
 
-        } else if (tipo == 3) {
+        } else if (tipo == 2) {
             if (siguiente > lineaCache - 1) {
                 siguiente = 0;
             }
@@ -224,7 +224,7 @@ public class Memorias {
                 siguiente++;
             }
 
-        } else if (tipo == 4) {
+        } else if (tipo == 3) {
             final int bloque = pos / tamBloque;
             final int conjunto = bloque % conjuntosCache;
             final int etiqueta = bloque / conjuntosCache;
@@ -234,7 +234,7 @@ public class Memorias {
             }
 
             if (estaEnConjunto(conjunto, etiqueta) != -1) {
-                //tiempo += 0.01;
+                tiempo += 0.01;
             }
 
             int linea = siguienteConjunto[conjunto][0];
@@ -244,13 +244,13 @@ public class Memorias {
                 CACHE_CONJUNTO[conjunto][linea][1] = -1;
                 CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
                 siguienteConjunto[conjunto][0]++;
-                //tiempo += 0.11;
+                tiempo += 0.11;
             } else {
                 if (CACHE_CONJUNTO[conjunto][linea][1] == 1) {
                     CACHE_CONJUNTO[conjunto][linea][1] = -1;
-                    //tiempo += 0.22;
+                    tiempo += 0.22;
                 } else {
-                    //tiempo += 0.11;
+                    tiempo += 0.11;
                 }
                 CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
                 siguienteConjunto[conjunto][0]++;
@@ -277,7 +277,7 @@ public class Memorias {
         return -1;
     }
 
-    public int ordenar(int tipo) {
+    public double ordenar(int tipo) {
         int n = 4096;
         int cambios = 1;
         int limite = n - 1;
@@ -309,8 +309,43 @@ public class Memorias {
         return RAM;
     }
 
-    public int getTiempo() {
+    public double getTiempo() {
         return tiempo;
+    }
+
+    public double pruebaEscritorio(int tipo) {
+        this.tiempo = 0;
+        int menor = 0, mayor = 0;
+        escribir(100, tipo, 10);    //En la memoria 100 escribe un 10
+        escribir(101, tipo, 13);
+        escribir(102, tipo, 21);
+        escribir(103, tipo, 11);
+        escribir(104, tipo, 67);
+        escribir(105, tipo, 43);
+        escribir(106, tipo, 9);
+        escribir(107, tipo, 11);
+        escribir(108, tipo, 19);
+        escribir(109, tipo, 23);
+        escribir(110, tipo, 32);
+        escribir(111, tipo, 54);
+        escribir(112, tipo, 98);
+        escribir(113, tipo, 7);
+        escribir(114, tipo, 13);
+        escribir(115, tipo, 1);
+        menor = leer(100, tipo);
+        mayor = menor;
+        int a = 0;
+        for (int i = 101; i <= 115; i++) {
+            a++;
+            escribir(615, tipo, a);
+            if (leer(i, tipo) < menor) {
+                menor = leer(i, tipo);
+            }
+            if (leer(i, tipo) > mayor) {
+                mayor = leer(i, tipo);
+            }
+        }
+        return this.tiempo;
     }
 
 }
