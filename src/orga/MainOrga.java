@@ -130,7 +130,7 @@ public class MainOrga extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Tipo", "Tiempo de Corrida n=5", "Tiempo Corrida n=1200"
+                "Tipo", "Tiempo de Corrida n=4096", "Tiempo Corrida n=5"
             }
         ) {
             Class[] types = new Class [] {
@@ -263,7 +263,7 @@ public class MainOrga extends javax.swing.JFrame {
         
         DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel(); 
         modeloT.setRowCount(0);
-        Object[] arr = {"Sin Cache",time2,time};
+        Object[] arr = {"Sin Cache",time,time2};
         modeloT.addRow(arr);
         this.tb_Lectura.setModel(modeloT);
 
