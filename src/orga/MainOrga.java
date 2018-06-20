@@ -6,6 +6,7 @@
 package orga;
 
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -52,11 +53,6 @@ public class MainOrga extends javax.swing.JFrame {
         bt_SinCacheLectura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bt_SinCacheLecturaMouseClicked(evt);
-            }
-        });
-        bt_SinCacheLectura.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_SinCacheLecturaActionPerformed(evt);
             }
         });
 
@@ -131,17 +127,17 @@ public class MainOrga extends javax.swing.JFrame {
 
         tb_Lectura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {null, null, null}
             },
             new String [] {
-                "Tipo", "Tiempo de Corrida"
+                "Tipo", "Tiempo de Corrida n=5", "Tiempo Corrida n=1200"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true
+                true, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -250,6 +246,26 @@ public class MainOrga extends javax.swing.JFrame {
 
     private void bt_SinCacheLecturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_SinCacheLecturaMouseClicked
         // TODO add your handling code here:
+        Memorias m = new Memorias();
+        ArrayList<Integer> datos = m.leerDatos();
+        System.out.println(datos);
+        double time = m.ordenar(0);
+        double time2 = m.pruebaEscritorio(0);
+
+        System.out.println("--------------------------------------------------");
+        for (int i = 0; i < m.getRAM().length; i++) {
+            int j = (m.getRAM())[i];
+            System.out.println(j);
+        }
+        System.out.println("SIN CACHE");
+        System.out.println("TIEMPO: " + time + "µs");
+        System.out.println("TIEMPO2: " + time2 + "µs");
+        
+        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel(); 
+        modeloT.setRowCount(0);
+        Object[] arr = {"Sin Cache",time2,time};
+        modeloT.addRow(arr);
+        this.tb_Lectura.setModel(modeloT);
 
         //Llamar Metodos Lectura y Escritura
         this.jd_Tabla.setModal(true);
@@ -295,24 +311,6 @@ public class MainOrga extends javax.swing.JFrame {
     private void bt_CacheDirectoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_CacheDirectoLecturaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bt_CacheDirectoLecturaActionPerformed
-
-    private void bt_SinCacheLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_SinCacheLecturaActionPerformed
-        // TODO add your handling code here:
-        Memorias m = new Memorias();
-        ArrayList<Integer> datos = m.leerDatos();
-        System.out.println(datos);
-        double time = m.ordenar(0);
-        double time2 = m.pruebaEscritorio(0);
-
-        System.out.println("--------------------------------------------------");
-        for (int i = 0; i < m.getRAM().length; i++) {
-            int j = (m.getRAM())[i];
-            System.out.println(j);
-        }
-        System.out.println("SIN CACHE");
-        System.out.println("TIEMPO: " + time + "µs");
-        System.out.println("TIEMPO2: " + time2 + "µs");
-    }//GEN-LAST:event_bt_SinCacheLecturaActionPerformed
 
     private void bt_CacheAsociativoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_CacheAsociativoLecturaActionPerformed
         // TODO add your handling code here:
