@@ -16,71 +16,25 @@ import java.util.ArrayList;
  */
 public class Memorias {
 
-    public int[] RAM = new int[4096];
-    public int[] CACHE = new int[1024];
+    int tam_cache = 1024;
+    final int bloq = 16;
+    int lin_cache = tam_cache / bloq;
+    int lin_conj = 8;
 
-    final int conjuntosCache = 16;
-    final int tamBloque = 8;
     final int tamConjunto = 4;
-    int lineaCache = 8;
-    int siguiente;
+    int siguiente = 0;
     public int[][][] CACHE_CONJUNTO = new int[16][4][3];
-    int CACHE_A[][] = new int[lineaCache][3];
-    public int[][] siguienteConjunto = new int[16][1];
+    int CACHE_A[][] = new int[lin_cache][3];
+    public int[] siguienteConjunto = new int[lin_cache / lin_conj];
 
     public int k = 8; // tamaño del bloque
     public int m = 1024; //numero de lineas
 
     public double tiempo = 0;
 
-    public void CD(int op) {
+    public int[] RAM = new int[4096];
+    public int[][] CACHE = new int[lin_cache][bloq + 3];
 
-        for (int i = 0; i < 4096; i++) {
-            if (i % 16 == 0) {
-                //marca las lineas como validas y modificada
-                CACHE[i] = 0;
-                CACHE[i + 1] = 0;
-            }
-        }
-
-        // leer
-        if (op == 1) {
-
-        }
-    }
-
-    public void CA() {
-        for (int i = 0; i < 4096; i++) {
-            if (i % 16 == 0) {
-                //marca las lineas como validas y modificada
-                CACHE[i] = 0;
-                CACHE[i + 1] = 0;
-            }
-        }
-    }
-
-    public void CAC() {
-        for (int i = 0; i < 4096; i++) {
-            if (i % 16 == 0) {
-                //marca las lineas como validas y modificada
-                CACHE[i] = 0;
-                CACHE[i + 1] = 0;
-            }
-        }
-    }
-
-    /*
-    int leerCA(int d) {
-        int lind;
-        if (CACHE[0] == 0) {
-
-        }
-
-    }
-
-    int calLin() {
-
-    }*/
     public ArrayList<Integer> leerDatos() {
         ArrayList<Integer> data = new ArrayList();
         File archivo = null;
@@ -125,66 +79,178 @@ public class Memorias {
         if (tipo == 0) {
             RAM[pos] = dato;
             tiempo += 0.1;
+
         } else if (tipo == 1) {
 
-        } else if (tipo == 2) {
-            if (siguiente > lineaCache - 1) {
-                siguiente = 0;
-            }
-            final int bloque = pos / tamBloque;
-            final int etiqueta = bloque;
-            int linea;
+            int bloque = pos / this.bloq;
+            int linea = bloque % lin_cache;
+            int palabra = pos % this.bloq;
 
-            if ((linea = estaEnCacheA(bloque)) != -1) {
-                tiempo += 0.01;
-                CACHE_A[linea][1] = 1;
-                return;
-            }
-            linea = siguiente;
-            if (CACHE_A[linea][0] == -1) {
-                CACHE_A[linea][0] = 1;
-                CACHE_A[linea][2] = etiqueta;
-                tiempo += 0.11;
-            } else {
-                if (CACHE_A[linea][1] == 1) {
-                    tiempo += 0.22;
+            if (CACHE[linea][0] == 1) {
+                if (CACHE[linea][1] == bloque) {
+                    tiempo += 0.01;
+                    CACHE[linea][palabra + 3] = dato;
+                    CACHE[linea][2] = 1;
+
+                } else if (CACHE[linea][2] == 1) {
+                    tiempo += 0.21;
+                    int actBloq = CACHE[linea][3] / this.bloq;
+                    int posRAM = actBloq * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        RAM[posRAM] = CACHE[linea][i + 3];
+                        posRAM++;
+                    }
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    CACHE[linea][2] = 1;
+                    CACHE[linea][palabra + 3] = dato;
                 } else {
                     tiempo += 0.11;
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][2] = 1;
+                    CACHE[linea][palabra + 3] = dato;
                 }
-                CACHE_A[linea][2] = etiqueta;
+            } else {
+                tiempo += 0.11;
+                int pos1 = bloque * this.bloq;
+                for (int i = 0; i < this.bloq; i++) {
+                    CACHE[linea][i + 3] = RAM[pos1];
+                    pos1++;
+                }
+                CACHE[linea][1] = bloque;
+                CACHE[linea][0] = 1;
+                CACHE[linea][2] = 1;
+                CACHE[linea][palabra + 3] = dato;
             }
-            siguiente++;
+
+        } else if (tipo == 2) {
+
+            int bloque = pos / this.bloq;
+            int linea = estaEnCacheA(bloque);
+            int palabra = pos % this.bloq;
+            if (CACHE[linea][0] == 1) {
+                if (CACHE[linea][1] == bloque) {
+                    tiempo += 0.01;
+                    CACHE[linea][palabra + 3] = dato;
+                    CACHE[linea][2] = 1;
+                } else if (CACHE[linea][2] == 1) {
+                    tiempo += 0.21;
+                    int actBloq = CACHE[linea][3] / this.bloq;
+                    int posRAM = actBloq * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        RAM[posRAM] = CACHE[linea][i + 3];
+                        posRAM++;
+                    }
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    CACHE[linea][2] = 1;
+                    CACHE[linea][palabra + 3] = dato;
+                } else {
+                    tiempo += 0.11;
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][2] = 1;
+                    CACHE[linea][palabra + 3] = dato;
+                    siguiente++;
+                    if (siguiente == lin_cache) {
+                        siguiente = 0;
+                    }
+                }
+            } else {
+                tiempo += 0.11;
+                int pos1 = bloque * this.bloq;
+                for (int i = 0; i < this.bloq; i++) {
+                    CACHE[linea][i + 3] = RAM[pos1];
+                    pos1++;
+                }
+                CACHE[linea][1] = bloque;
+                CACHE[linea][0] = 1;
+                CACHE[linea][2] = 1;
+                CACHE[linea][palabra + 3] = dato;
+                siguiente++;
+                if (siguiente == lin_cache) {
+                    siguiente = 0;
+                }
+            }
 
         } else if (tipo == 3) {
-            final int bloque = pos / tamBloque;
-            final int conjunto = bloque % conjuntosCache;
-            final int etiqueta = bloque / conjuntosCache;
 
-            if (siguienteConjunto[conjunto][0] > tamConjunto - 1) {
-                siguienteConjunto[conjunto][0] = 0;
-            }
+            int bloque = pos / this.bloq;
+            int conjunto = bloque % (lin_cache / lin_conj);
+            int palabra = pos % this.bloq;
+            int linea = lineaDeCache(bloque, conjunto);
 
-            int linea;
-            if ((linea = estaEnConjunto(conjunto, etiqueta)) != -1) {
-                tiempo += 0.01;
-                CACHE_CONJUNTO[conjunto][linea][1] = 1;
-            }
-
-            linea = siguienteConjunto[conjunto][0];
-
-            if (CACHE_CONJUNTO[conjunto][linea][0] == -1) {
-                CACHE_CONJUNTO[conjunto][linea][0] = 1;
-                CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
-                tiempo += 0.11;
-            } else {
-                if (CACHE_CONJUNTO[conjunto][linea][1] == 1) {
-                    tiempo += 0.22;
-                } else {
+            if (CACHE[linea][0] == 1) {
+                if (existeEnCache(bloque, conjunto)) {
                     tiempo += 0.01;
-                    //tiempo += 0.11;
+                    CACHE[linea][palabra + 3] = dato;
+                } else if (CACHE[linea][2] == 1) {
+                    int actBloq = CACHE[linea][1];
+                    int posEnRam = actBloq * this.bloq;
+
+                    for (int i = 0; i < this.bloq; i++) {
+                        RAM[posEnRam] = CACHE[linea][i + 3];
+                        posEnRam++;
+                    }
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    tiempo += 0.21;
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][2] = 0;
+                    CACHE[linea][palabra + 3] = dato;
+                } else {
+                    siguienteConjunto[conjunto]++;
+                    if (siguienteConjunto[conjunto] % (lin_conj) == 0) {
+                        siguienteConjunto[conjunto] -= 8;
+                    }
+                    tiempo += 0.11;
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][0] = 1;
+                    CACHE[linea][2] = 0;
+                    CACHE[linea][palabra + 3] = dato;
+
                 }
+
+            } else {
+                siguienteConjunto[conjunto]++;
+                if (siguienteConjunto[conjunto] % lin_conj == 0) {
+                    siguienteConjunto[conjunto] -= 8;
+                }
+                tiempo += 0.11;
+                int pos1 = bloque * this.bloq;
+                for (int i = 0; i < this.bloq; i++) {
+                    CACHE[linea][i + 3] = RAM[pos1];
+                    pos1++;
+                }
+                CACHE[linea][1] = bloque;
+                CACHE[linea][0] = 1;
+                CACHE[linea][2] = 0;
+                CACHE[linea][palabra + 3] = dato;
             }
-            siguienteConjunto[conjunto][0]++;
+
         }
     }
 
@@ -195,92 +261,211 @@ public class Memorias {
             tiempo += 0.1;
         } else if (tipo == 1) {
 
-        } else if (tipo == 2) {
-            
-            if (siguiente > lineaCache - 1) {
-                siguiente = 0;
-            }
-            final int bloque = pos / tamBloque;
+            int bloque = pos / this.bloq;
+            int linea = bloque % lin_cache;
+            int palabra = pos % this.bloq;
 
-            if (estaEnCacheA(bloque) != -1) {
-                tiempo += 0.01;
-            }
-
-            final int linea = siguiente;
-            final int etiqueta = bloque;
-
-            if (CACHE_A[linea][0] == -1) {
-                CACHE_A[linea][0] = 1;
-                CACHE_A[linea][1] = -1;
-                CACHE_A[linea][2] = etiqueta;
-                siguiente++;
-                tiempo += 0.11;
-            } else {
-                if (CACHE_A[linea][1] == 1) {
-                    CACHE_A[linea][1] = -1;
-                    //tiempo += 0.22;
-                } else {
-                    //tiempo += 0.11;
-                }
-                CACHE_A[linea][2] = etiqueta;
-                siguiente++;
-            }
-        } else if (tipo == 3) {
-            final int bloque = pos / tamBloque;
-            final int conjunto = bloque % conjuntosCache;
-            final int etiqueta = bloque / conjuntosCache;
-
-            if (siguienteConjunto[conjunto][0] > tamConjunto - 1) {
-                siguienteConjunto[conjunto][0] = 0;
-            }
-
-            if (estaEnConjunto(conjunto, etiqueta) != -1) {
-                tiempo += 0.01;
-            }
-
-            int linea = siguienteConjunto[conjunto][0];
-
-            if (CACHE_CONJUNTO[conjunto][linea][0] == -1) {
-                CACHE_CONJUNTO[conjunto][linea][0] = 1;
-                CACHE_CONJUNTO[conjunto][linea][1] = -1;
-                CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
-                siguienteConjunto[conjunto][0]++;
-                tiempo += 0.11;
-            } else {
-                if (CACHE_CONJUNTO[conjunto][linea][1] == 1) {
-                    CACHE_CONJUNTO[conjunto][linea][1] = -1;
-                    tiempo += 0.22;
-                } else {
+            if (CACHE[linea][0] == 1) {
+                if (CACHE[linea][1] == bloque) {
                     tiempo += 0.01;
-                    //tiempo += 0.11;
+                    return CACHE[linea][palabra + 3];
+                } else if (CACHE[linea][2] == 1) {
+                    int actBloq = CACHE[linea][3] / this.bloq;
+                    int posRAM = actBloq * this.bloq;
+
+                    for (int i = 0; i < this.bloq; i++) {
+                        RAM[posRAM] = CACHE[linea][i + 3];
+                        posRAM++;
+                    }
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    tiempo += 0.21;
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][2] = 0;
+                    return CACHE[linea][palabra + 3];
+                } else {
+                    tiempo += 0.11;
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][2] = 0;
+                    return CACHE[linea][palabra + 3];
+
                 }
-                CACHE_CONJUNTO[conjunto][linea][2] = etiqueta;
-                siguienteConjunto[conjunto][0]++;
+            } else {
+                tiempo += 0.11;
+                int pos1 = bloque * this.bloq;
+                for (int i = 0; i < this.bloq; i++) {
+                    CACHE[linea][i + 3] = RAM[pos1];
+                    pos1++;
+                }
+                CACHE[linea][1] = bloque;
+                CACHE[linea][0] = 1;
+                CACHE[linea][2] = 0;
+                return CACHE[linea][palabra + 3];
+
             }
+        } else if (tipo == 2) {
+            int bloque = pos / this.bloq;
+            int linea = estaEnCacheA(bloque);
+            int palabra = pos % this.bloq;
+            if (CACHE[linea][0] == 1) {
+                if (CACHE[linea][1] == bloque) {
+                    tiempo += 0.01;
+                    return CACHE[linea][palabra + 3];
+                } else if (CACHE[linea][2] == 1) {
+                    int actBloq = CACHE[linea][3] / this.bloq;
+                    int posRAM = actBloq * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        RAM[posRAM] = CACHE[linea][i + 3];
+                        posRAM++;
+                    }
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    tiempo += 0.21;
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][2] = 0;
+                    return CACHE[linea][palabra + 3];
+                } else {
+                    tiempo += 0.11;
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][2] = 0;
+                    siguiente++;
+                    if (siguiente == lin_cache) {
+                        siguiente = 0;
+                    }
+                    return CACHE[linea][palabra + 3];
+                }
+            } else {
+                tiempo += 0.11;
+                int pos1 = bloque * this.bloq;
+                for (int i = 0; i < this.bloq; i++) {
+                    CACHE[linea][i + 3] = RAM[pos1];
+                    pos1++;
+                }
+                CACHE[linea][1] = bloque;
+                CACHE[linea][0] = 1;
+                CACHE[linea][2] = 0;
+                siguiente++;
+                if (siguiente == lin_cache) {
+                    siguiente = 0;
+                }
+                return CACHE[linea][palabra + 3];
+            }
+
+        } else if (tipo == 3) {
+
+            int bloque = pos / this.bloq;
+            int conjunto = bloque % (lin_cache / lin_conj);
+            int palabra = pos % this.bloq;
+            int linea = lineaDeCache(bloque, conjunto);
+
+            if (CACHE[linea][0] == 1) {
+                if (existeEnCache(bloque, conjunto)) {
+                    tiempo += 0.01;
+                    return CACHE[linea][palabra + 3];
+                } else if (CACHE[linea][2] == 1) {
+                    int actBloq = CACHE[linea][1];
+                    int posRAM = actBloq * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        RAM[posRAM] = CACHE[linea][i + 3];
+                        posRAM++;
+                    }
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    tiempo += 0.21;
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][2] = 0;
+                    return CACHE[linea][palabra + 3];
+                } else {
+                    siguienteConjunto[conjunto]++;
+                    if (siguienteConjunto[conjunto] % lin_conj == 0) {
+                        siguienteConjunto[conjunto] -= 8;
+                    }
+                    tiempo += 0.11;
+                    int pos1 = bloque * this.bloq;
+                    for (int i = 0; i < this.bloq; i++) {
+                        CACHE[linea][i + 3] = RAM[pos1];
+                        pos1++;
+                    }
+                    CACHE[linea][1] = bloque;
+                    CACHE[linea][0] = 1;
+                    CACHE[linea][2] = 0;
+                    return CACHE[linea][palabra + 3];
+
+                }
+
+            } else {
+                siguienteConjunto[conjunto]++;
+                if (siguienteConjunto[conjunto] % lin_conj == 0) {
+                    siguienteConjunto[conjunto] -= 8;
+                }
+                tiempo += 0.11;
+                int pos1 = bloque * this.bloq;
+                for (int i = 0; i < this.bloq; i++) {
+                    CACHE[linea][i + 3] = RAM[pos1];
+                    pos1++;
+                }
+                CACHE[linea][1] = bloque;
+                CACHE[linea][0] = 1;
+                CACHE[linea][2] = 0;
+                return CACHE[linea][palabra + 3];
+            }
+
         }
         return dato;
     }
 
-    private int estaEnConjunto(int conjunto, int etiqueta) {
-        for (int i = 0; i < tamConjunto; i++) {
-            if (CACHE_CONJUNTO[conjunto][i][2] == etiqueta) {
-                return i;
+    public int lineaDeCache(int bloque, int conjunto) {
+        int lineaCont = conjunto * lin_conj;
+        for (int i = 0; i < lin_conj; i++) {
+            if (bloque == CACHE[lineaCont][1]) {
+                return lineaCont;
             }
+            lineaCont++;
         }
-        return -1;
+        return siguienteConjunto[conjunto];
+    }
+
+    public boolean existeEnCache(int bloque, int conjunto) {
+        int lineaCont = conjunto * lin_conj;
+        for (int i = 0; i < lin_conj; i++) {
+            if (bloque == CACHE[lineaCont][1]) {
+                return true;
+            }
+            lineaCont++;
+        }
+        return false;
     }
 
     private int estaEnCacheA(int bloque) {
-        for (int i = 0; i < lineaCache; i++) {
-            if (CACHE_A[i][2] == bloque) {
+        for (int i = 0; i < lin_cache; i++) {
+            if (CACHE[i][1] == bloque) {
                 return i;
             }
         }
-        return -1;
+        return siguiente;
     }
 
     public double ordenar(int tipo) {
-        int n = 4096;
+        int n = 1200;
         int cambios = 1;
         int limite = n - 1;
         //this.tiempo = 0;

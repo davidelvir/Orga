@@ -63,6 +63,11 @@ public class MainOrga extends javax.swing.JFrame {
                 bt_CacheDirectoLecturaMouseClicked(evt);
             }
         });
+        bt_CacheDirectoLectura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_CacheDirectoLecturaActionPerformed(evt);
+            }
+        });
 
         bt_CacheAsociativoLectura.setText("Cache Asociativo");
         bt_CacheAsociativoLectura.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -116,7 +121,7 @@ public class MainOrga extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Tipo", "Tiempo de Corrida n=4096", "Tiempo Corrida n=5"
+                "Tipo", "Tiempo de Corrida n=4096", "Prueba de escritorio"
             }
         ) {
             Class[] types = new Class [] {
@@ -246,12 +251,12 @@ public class MainOrga extends javax.swing.JFrame {
         System.out.println("SIN CACHE");
         System.out.println("TIEMPO: " + time + "µs");
         System.out.println("TIEMPO2: " + time2 + "µs");
-        
+
         DecimalFormat numberFormat = new DecimalFormat("#.00");
-        
-        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel(); 
+
+        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel();
         modeloT.setRowCount(0);
-        Object[] arr = {"Sin Cache",numberFormat.format(time),numberFormat.format(time2)};
+        Object[] arr = {"Sin Cache", numberFormat.format(time), numberFormat.format(time2)};
         modeloT.addRow(arr);
         this.tb_Lectura.setModel(modeloT);
 
@@ -287,18 +292,16 @@ public class MainOrga extends javax.swing.JFrame {
             int j = (m.getRAM())[i];
             System.out.println(j);
         }
-        
-        
 
         System.out.println("ASOCIATIVA");
         System.out.println("TIEMPO: " + time + "µs");
         System.out.println("TIEMPO2: " + time2 + "µs");
-        
+
         DecimalFormat numberFormat = new DecimalFormat("#.00");
-        
-        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel(); 
+
+        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel();
         modeloT.setRowCount(0);
-        Object[] arr = {"Cache Asociativa",numberFormat.format(time),numberFormat.format(time2)};
+        Object[] arr = {"Cache Asociativa", numberFormat.format(time), numberFormat.format(time2)};
         modeloT.addRow(arr);
         this.tb_Lectura.setModel(modeloT);
 
@@ -312,11 +315,11 @@ public class MainOrga extends javax.swing.JFrame {
 
     private void bt_AsociativoConjuntoLecturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_AsociativoConjuntoLecturaMouseClicked
         // TODO add your handling code here:
-        
-         Memorias m = new Memorias();
+
+        Memorias m = new Memorias();
         ArrayList<Integer> datos = m.leerDatos();
         double time = m.ordenar(3);
-        double time2 = m.pruebaEscritorio(2);
+        double time2 = m.pruebaEscritorio(3);
 
         System.out.println(datos);
 
@@ -328,12 +331,12 @@ public class MainOrga extends javax.swing.JFrame {
         System.out.println("ASOCIATIVA POR CONJUNTOS");
         System.out.println("TIEMPO: " + time + "µs");
         System.out.println("TIEMPO2: " + time2 + "µs");
-        
+
         DecimalFormat numberFormat = new DecimalFormat("#.00");
-        
-        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel(); 
+
+        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel();
         modeloT.setRowCount(0);
-        Object[] arr = {"Cache Asociativa por Conjuntos",numberFormat.format(time),numberFormat.format(time2)};
+        Object[] arr = {"Cache Asociativa por Conjuntos", numberFormat.format(time), numberFormat.format(time2)};
         modeloT.addRow(arr);
         this.tb_Lectura.setModel(modeloT);
 
@@ -344,6 +347,39 @@ public class MainOrga extends javax.swing.JFrame {
         this.jd_Tabla.setVisible(true);
 
     }//GEN-LAST:event_bt_AsociativoConjuntoLecturaMouseClicked
+
+    private void bt_CacheDirectoLecturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_CacheDirectoLecturaActionPerformed
+        // TODO add your handling code here:
+        Memorias m = new Memorias();
+        ArrayList<Integer> datos = m.leerDatos();
+        double time = m.ordenar(1);
+        double time2 = m.pruebaEscritorio(1);
+
+        System.out.println(datos);
+
+        for (int i = 0; i < m.getRAM().length; i++) {
+            int j = (m.getRAM())[i];
+            System.out.println(j);
+        }
+
+        System.out.println("DIRECTA");
+        System.out.println("TIEMPO: " + time + "µs");
+        System.out.println("TIEMPO2: " + time2 + "µs");
+        
+         DecimalFormat numberFormat = new DecimalFormat("#.00");
+
+        DefaultTableModel modeloT = (DefaultTableModel) tb_Lectura.getModel();
+        modeloT.setRowCount(0);
+        Object[] arr = {"Cache Directa", numberFormat.format(time), numberFormat.format(time2)};
+        modeloT.addRow(arr);
+        this.tb_Lectura.setModel(modeloT);
+
+        //Llamar Metodos Lectura y Escritura
+        this.jd_Tabla.setModal(true);
+        this.jd_Tabla.pack();
+        this.jd_Tabla.setLocationRelativeTo(this);
+        this.jd_Tabla.setVisible(true);
+    }//GEN-LAST:event_bt_CacheDirectoLecturaActionPerformed
 
     /**
      * @param args the command line arguments
